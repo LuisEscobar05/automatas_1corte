@@ -1,0 +1,19 @@
+<div class="container">
+    <br>
+    <div class="row col-md-12" *ngFor="let item of data" id="col-div-12">
+      <div class="card col col-md-4 estados">
+        <p class="estado">{{item[0]}}</p>
+      </div>
+      <div class="card col col-md-1 salidas">
+            <p class="" style="margin-top: 1em;"> {{item[1]}} </p>
+      </div>
+      <div class="card col col-md-4 estados2">
+        <p class="estado" >{{item[2]}}</p>
+      </div>
+    </div>
+    <br>
+    <p>{{mesage}}</p>
+    <button (click)="regresar()" class="btn btn-primary">Regresar</button>
+</div>
+
+
