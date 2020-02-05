@@ -13,7 +13,7 @@ export class EntradaComponent implements OnInit {
   join;
   transicion;
   transiciones = [];
-  error = false;
+  // error = false;
   errorMessage;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private dataService: DataService) { }
 
@@ -50,37 +50,29 @@ export class EntradaComponent implements OnInit {
       this.q1();
       console.log(this.transiciones);
     }else{
-      this.error = true;
+      // this.error = true;
       this.errorMessage = "Bucle no valido debe ser for"
     }
   }
 
   q1(){
     if(this.cadena.charAt(this.iterator)==' '){
-      this.transicion = ["q1","λ","q2"];
-      this.transiciones.push(this.transicion);
-      console.log("Ok1");
       this.iterator++;
-      this.q2();
+      if(this.cadena.charAt(this.iterator)=='('){
+        this.transicion = ["q1",this.cadena.charAt(this.iterator),"q2"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok1");
+        this.q2();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.charAt(this.iterator)+ " Falta un ( para continuar";
+      }
     }else{
-      this.errorMessage ="Falta espacio vacio"
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
     }
   }
 
   q2(){
-
-    if(this.cadena.charAt(this.iterator)=='('){
-      this.transicion = ["q2",this.cadena.charAt(this.iterator),"q3"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok2");
-      this.q3();
-    }else{
-      this.errorMessage = "No se ingreso ---->("
-    }
-  }
-
-  q3(){
     var ca = this.cadena.charAt(this.iterator);
     var aux = this.iterator;
     console.log(this.cadena.charAt(this.iterator))
@@ -89,313 +81,477 @@ export class EntradaComponent implements OnInit {
       console.log("testt"+this.iterator)
       ca = this.cadena.charAt(this.iterator)
     }
-    console.log(aux);
+
     if(this.cadena.substr(aux, this.iterator).match(/int/)){
-      this.transicion = ["q3",this.cadena.substr(aux,this.iterator-aux),"q4"];
+      this.transicion = ["q2",this.cadena.substr(aux,this.iterator-aux),"q3"];
       this.transiciones.push(this.transicion);
       this.iterator--;
       this.iterator++;
       console.log('ok3');
-      this.q4();
+      this.q3();
     }else{
-      if(this.cadena.charAt(aux)==' '){
-        this.transicion = ["q3","λ","q30"];
-        this.transiciones.push(this.transicion);
-        this.iterator = aux;
-        console.log(this.iterator);
-        this.iterator++;
-        console.log('ok3-2');
-        this.q30();
+      if(this.cadena.charAt(aux)==" "){
+        aux++;
+        console.log("ok")
+        if(this.cadena.charAt(aux)==';'){
+          this.transicion = ["q2",this.cadena.charAt(aux),"q23"];
+          this.transiciones.push(this.transicion);
+          // this.iterator = aux;
+          this.iterator--;
+          this.iterator++;
+          console.log('ok2-2');
+          this.q23();
+        }else{
+          this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser ; para continuar";
+        }
       }else{
-        this.errorMessage = "Falta un vacio o la palabra reservada 'int'";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio o la palabra reservada 'int' para continuar";
       }
+
+    }
+
+  }
+
+  q3(){
+    if(this.cadena.charAt(this.iterator)==" "){
+      this.iterator++;
+      if(this.cadena.charAt(this.iterator)=="i"){
+        this.transicion = ["q3",this.cadena.charAt(this.iterator),"q4"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok3");
+        this.q4();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta i para continuar";
+      }
+    }else{
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
     }
   }
 
   q4(){
-    console.log(this.cadena.charAt(this.iterator));
     if(this.cadena.charAt(this.iterator)==" "){
-      this.transicion = ["q4","λ","q5"];
-      this.transiciones.push(this.transicion);
       this.iterator++;
-      console.log('ok4');
-      this.q5();
+      if(this.cadena.charAt(this.iterator)=='='){
+        this.transicion = ["q4", this.cadena.charAt(this.iterator),"q5"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        this.q5();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un =";
+      }
     }else{
-      this.errorMessage="Falta espacio";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio";
     }
   }
 
   q5(){
-    if(this.cadena.charAt(this.iterator)=="i"){
-      this.transicion = ["q5",this.cadena.charAt(this.iterator),"q6"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok5");
-      this.q6();
-    }else{
-      this.errorMessage="Falta i";
-    }
-  }
-
-  q6(){
     if(this.cadena.charAt(this.iterator)==" "){
-      this.transicion = ["q6","λ","q7"];
-      this.transiciones.push(this.transicion);
       this.iterator++;
-      console.log("ok6");
-      this.q7();
-    }else{
-      this.errorMessage="Falta vacio";
-    }
-  }
-
-  q7(){
-    if(this.cadena.charAt(this.iterator)=='='){
-      this.transicion = ["q7", this.cadena.charAt(this.iterator),"q8"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok7");
-      this.q8();
-    }else{
-      this.errorMessage="Falta =";
-    }
-  }
-
-  q8(){
-    if(this.cadena.charAt(this.iterator)==" "){
-      this.transicion = ["q8", "λ","q9"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok8")
-      this.q9();
+      if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+        this.transicion = ["q5",this.cadena.substr(this.iterator,1),"q6"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        this.q6();
+      }else{  
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un numero";
+      }
    }else{
      this.errorMessage = "Falta vacio";
    }
   }
 
-  q9(){
-    if(this.cadena.charAt(this.iterator)== 0){
-      this.transicion = ["q9",this.cadena.charAt(this.iterator),"q10"];
+  q6(){
+    if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+      this.transicion = ["q6",this.cadena.substr(this.iterator,1),"q6"];
       this.transiciones.push(this.transicion);
-      console.log("ok9");
+      console.log("ok6");
       this.iterator++;
-      this.q10();
+      this.q6();
     }else{
-      if(this.cadena.charAt(this.iterator)==5){
-        this.q11();
+      if(this.cadena.charAt(this.iterator) == ";"){
+        this.transicion = ["q6",this.cadena.charAt(this.iterator),"q7"];
+        this.transiciones.push(this.transicion);
+        console.log("ok6");
+        this.iterator++;
+        this.q7();
       }else{
-        this.errorMessage = "Falta un 0 o 5";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un ; para continuar";
       }
       
     }
   }
 
-  q11(){
-    this.transicion = ["q9",this.cadena.charAt(this.iterator),"q11"];
-    this.transiciones.push(this.transicion);
-    this.transicion = ["q11","noRead","q10"];
-    this.transiciones.push(this.transicion);
-    console.log("ok11");
-    this.iterator++;
-    this.q10();
-  }
-  q10(){
-    if(this.cadena.charAt(this.iterator)==";"){
-      this.transicion = ["q10",this.cadena.charAt(this.iterator),"q12"];
-      this.transiciones.push(this.transicion);
-      console.log("ok10");
-      this.iterator++;
-      this.q12();
-    }else{
-      this.errorMessage = "Falta un ;";
-    }
-
-  }
-
-  q12(){
+  q7(){
     if(this.cadena.charAt(this.iterator)==" "){
-      this.transicion = ["q12","λ","q13"];
-      this.transiciones.push(this.transicion);
-      console.log("ok12");
       this.iterator++;
-      this.q13();
+      if(this.cadena.charAt(this.iterator)=="i"){
+        this.transicion = ["q7",this.cadena.charAt(this.iterator),"q8"];
+        this.transiciones.push(this.transicion);
+        console.log("ok7");
+        this.iterator++;
+        this.q8();
+      }else{
+        this.errorMessage = "Falto i";
+      }
     }else{
       this.errorMessage= "Falta vacio";
     }
   }
 
-  q13(){
-    if(this.cadena.charAt(this.iterator)=="i"){
-      this.transicion = ["q13",this.cadena.charAt(this.iterator),"q14"];
-      this.transiciones.push(this.transicion);
-      console.log("ok13");
-      this.iterator++;
-      this.q14();
-    }else{
-      this.errorMessage = "Falto i";
-    }
-  }
-  
-  q14(){
+  q8(){
     if(this.cadena.charAt(this.iterator)=="<"){
-      this.transicion = ["q14", this.cadena.charAt(this.iterator),"q15"];
+      this.transicion = ["q8", this.cadena.charAt(this.iterator),"q9"];
       this.transiciones.push(this.transicion);
       this.iterator++;
-      console.log("ok14");
-      this.q15();
+      console.log("ok8");
+      this.q9();
     }else{
-      this.q16();
-    }
+      if(this.cadena.charAt(this.iterator)==">"){
+        this.transicion = ["q8",this.cadena.charAt(this.iterator),"q10"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok8");
+        this.q10();
+      }else{
+        this.errorMessage = "Falta el >";
+      }
+    } 
   }
 
-  q15(){
+  q9(){
     if(this.cadena.charAt(this.iterator)==" "){
-      this.transicion = ["q15","λ","q17"];
-      this.transiciones.push(this.transicion);
       this.iterator++;
-      console.log("ok15");
-      this.q17();
+      if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+        this.transicion = ["q9",this.cadena.substr(this.iterator,1),"q12"];
+        this.transiciones.push(this.transicion);
+        console.log("ok9");
+        this.iterator++;
+        this.q12();
+      }else{  
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un numero";
+      }
     }else{
       this.errorMessage= "Falta espacio vacio";
     }
   }
 
-  q16(){
-    if(this.cadena.charAt(this.iterator)==">"){
-      this.transicion = ["q14",this.cadena.charAt(this.iterator),"q16"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok16");
-      this.q18();
-    }else{
-      this.errorMessage = "Falta el >";
-    }
-  }
-
-  q17(){
-    if(this.cadena.charAt(this.iterator)==1){
-      this.transicion = ["q17",this.cadena.charAt(this.iterator),"q19"];
-      this.transicion.push(this.transicion);
-      this.iterator++;
-      console.log("ok17");
-      this.q19();
-    }else{
-      this.errorMessage= "Falto el 1";
-    }
-  }
-
-  q18(){
+  q10(){
     if(this.cadena.charAt(this.iterator)=="="){
-      this.transicion = ["q16",this.cadena.charAt(this.iterator),"q18"];
+      this.transicion = ["q10",this.cadena.charAt(this.iterator),"q11"];
       this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok18");
-      this.q19();
+      console.log("ok10");
+      this.q11();
     }else{
       this.errorMessage ="Falta el = ";
     }
   }
 
-  q19(){
-
+  q11(){
+    this.transicion = ["q11","no evalua","12"];
+    this.transiciones.push(this.transicion);
+    this.iterator++;
+    this.q12();
   }
-
-  q30(){
-    if(this.cadena.charAt(this.iterator)==";"){
-      this.transicion = ["q30",this.cadena.charAt(this.iterator),"q31"];
+  q12(){
+    if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+      this.transicion = ["q12",this.cadena.substr(this.iterator,1),"q12"];
       this.transiciones.push(this.transicion);
+      console.log("ok12");
       this.iterator++;
-      console.log("ok30");
-      this.q31();
+      this.q12();
     }else{
-      this.errorMessage = "Falta el ;";
-    }
-
-  }
-
-  q31(){
-    if(this.cadena.charAt(this.iterator)==' '){
-      this.transicion = ["q30","λ","q31"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log("ok31");
-      this.q32();
-    }else{
-      this.errorMessage = "Falta el vacio";
+      if(this.cadena.charAt(this.iterator) == ";"){
+        this.transicion = ["q12",this.cadena.charAt(this.iterator),"q13"];
+        this.transiciones.push(this.transicion);
+        console.log("ok17-2");
+        this.iterator++;
+        this.q13();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un ; para continuar";
+      }
+      
     }
   }
 
-  //aqui quedee
-  //checar ´palabra resultado por que no deberia de hacer el ciclo y mas adelante no me reconoce el !
-
-  q32(){
-    var ca = this.cadena.charAt(this.iterator);
-    var aux = this.iterator;
-    while(this.iterator<9){
+  q13(){
+    if(this.cadena.charAt(this.iterator)==" "){
       this.iterator++;
-      console.log(ca)
-      ca = this.cadena.charAt(this.iterator)
-    }
-    if(this.cadena.substr(aux, this.iterator).match(/resultado/)){
-      this.transicion = ["q32",this.cadena.substr(aux,this.iterator),"q33"];
-      this.transiciones.push(this.transicion);
-      this.iterator++;
-      console.log('ok32');
-      this.q33();
-    }else{
-      if(this.cadena.charAt(aux)==";"){
-        this.iterator = aux;
-        this.transicion=["q32",this.cadena.charAt(this.iterator),"q34"];
+      if(this.cadena.charAt(this.iterator)=="i"){
+        this.transicion = ["q13",this.cadena.charAt(this.iterator),"q14"];
         this.transiciones.push(this.transicion);
         this.iterator++;
-        console.log('ok32-2');
-        this.q34();
+        console.log("ok14");
+        this.q14();
       }else{
-        this.errorMessage = "Falta la palabra reservada 'resultado' o el ;";
+        this.errorMessage ="Falta i para continuar";
+      }
+    }else{
+      this.errorMessage = "Falta vacio";
+    }
+
+  }
+
+  q14(){
+    if(this.cadena.charAt(this.iterator)=="+"){
+      this.transicion = ["q14",this.cadena.charAt(this.iterator),"q15"];
+      this.transiciones.push(this.transicion);
+      this.iterator++;
+      console.log("ok14");
+      this.q15();
+    }else{
+      if(this.cadena.charAt(this.iterator)=="-"){
+        this.transicion = ["q14",this.cadena.charAt(this.iterator),"q16"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok14-2");
+        this.q16();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un signo + o un signo - para continuar";
+      }
+      
+    }
+  }
+
+  q15(){
+    if(this.cadena.charAt(this.iterator)=="+"){
+      this.transicion = ["q15",this.cadena.charAt(this.iterator),"q17"];
+      this.transiciones.push(this.transicion);
+      this.iterator++;
+      console.log("ok15");
+      this.q17();
+    }else{
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un signo + para continuar";
+    }
+  }
+
+
+  q16(){
+    if(this.cadena.charAt(this.iterator)=="-"){
+      this.transicion = ["q16",this.cadena.charAt(this.iterator),"q17"];
+      this.transiciones.push(this.transicion);
+      this.iterator++;
+      console.log("ok23");
+      this.q17();
+    }else{
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un signo - para continuar";
+    }
+  }
+
+  q17(){
+    console.log("ok")
+    if(this.cadena.charAt(this.iterator)==")"){
+      this.transicion = ["q17",this.cadena.charAt(this.iterator),"q18"];
+      this.transiciones.push(this.transicion);
+      this.iterator++;
+      console.log("ok17");
+      this.q18();
+    }else{
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe ser un ) para continuar";
+    }
+  }
+
+  q18(){
+    if(this.cadena.charAt(this.iterator)=="{"){
+      this.transicion = ["q18",this.cadena.charAt(this.iterator),"q19"];
+      this.transiciones.push(this.transicion);
+      this.iterator++;
+      console.log("ok18");
+      this.q19();
+    }else{
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe ser un { para continuar";
+    }
+  }
+
+  q19(){
+    var ca = this.cadena.charAt(this.iterator);
+    var aux = this.iterator;
+    console.log("cadena"+aux)
+    while(ca!==';'){
+      this.iterator++;
+      console.log("cadena"+this.iterator)
+      ca = this.cadena.charAt(this.iterator)
+    }
+    console.log("cadena"+this.cadena.substr(aux,this.iterator-aux));
+    if(this.cadena.substr(aux,this.iterator-aux).match(/instrucciones/)){
+      this.transicion = ["q19",this.cadena.substr(aux,this.iterator-aux),"q20"];
+      this.transiciones.push(this.transicion);
+      this.iterator--;
+      this.iterator++;
+      console.log("ok19");
+      this.q20();
+    }else{
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.substr(aux,this.iterator-aux)+" Falta la palabra instrucciones para continuar";
+    }
+  }
+
+  q20(){
+    if(this.cadena.charAt(this.iterator)==";"){
+      this.transicion = ["q20",this.cadena.charAt(this.iterator),"q21"];
+      this.transiciones.push(this.transicion);
+      this.iterator++;
+      console.log("ok20");
+      this.q21();
+    }else{
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe ser un ; para continuar";
+    }
+  }
+
+  q21(){
+    if(this.cadena.charAt(this.iterator)=="\n"){
+      this.iterator++;
+      if(this.cadena.charAt(this.iterator)=="}"){
+        this.transicion = ["q21",this.cadena.charAt(this.iterator),"q22"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok21");
+        this.q22();
+      }else{
+        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe2 ser un } para continuar";
+      }
+    }else{
+      if(this.cadena.charAt(this.iterator)=="}"){
+        this.transicion = ["q21",this.cadena.charAt(this.iterator),"q22"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok21");
+        this.q22();
+      }else{
+        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe ser un } para continuar";
       }
     }
   }
 
+  q22(){
+    this.transicion = ["q22","estado de aceptacion","for correcto"];
+    this.transiciones.push(this.transicion);
+  }
 
-  q33(){
-    console.log(this.iterator);
-    if(this.cadena.charAt(this.iterator)=="!"){
-      this.transicion = ["q33",this.cadena.charAt(this.iterator),"q35"];
+  q23(){
+    console.log(this.iterator)
+    if(this.cadena.substr(this.iterator,1).match(/[a-zA-Z]/)){
+      this.transicion = ["q23",this.cadena.substr(this.iterator,1),"q24"];
       this.transiciones.push(this.transicion);
+      console.log("ok23");
       this.iterator++;
-      console.log("ok33");
-      this.q35();
+      this.q25();
     }else{
-      this.errorMessage = "Falta el !"; 
+      if(this.cadena.charAt(this.iterator) == ";"){
+        this.transicion = ["q23",this.cadena.charAt(this.iterator),"q24"];
+        this.transiciones.push(this.transicion);
+        console.log("ok23-2");
+        this.iterator++;
+        this.q24();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un ; o una letra para continuar";
+      }
+
     }
   }
 
-  q34(){
-    this.transicion = ["q34",this.cadena.charAt(this.iterator),"q36"];
-    this.q36();
+  q24(){
+    this.transicion = ["q24","Sin entrada","q27"];
+    this.transiciones.push(this.transicion);
+    console.log(this.iterator);
+    this.q27();
   }
 
+  q25(){
+    if(this.cadena.substr(this.iterator,1).match(/[a-z]/)){
+      this.transicion = ["q25",this.cadena.substr(this.iterator,1),"q25"];
+      this.transiciones.push(this.transicion);
+      console.log("ok25");
+      this.iterator++;
+      this.q25();
+    }else{
+      if(this.cadena.charAt(this.iterator) == "!"){
+        this.transicion = ["q25",this.cadena.charAt(this.iterator),"q26"];
+        this.transiciones.push(this.transicion);
+        console.log("ok25-2");
+        this.iterator++;
+        this.q26();
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un ; o una o mas letras para continuar";
+      }
+    }
+  }
 
-  q35(){
+  q26(){
     if(this.cadena.charAt(this.iterator)=="="){
-      this.transicion = ["q35",this.cadena.charAt(this.iterator),"q36"];
+      this.transicion = ["q26",this.cadena.charAt(this.iterator),"q27"];
       this.transiciones.push(this.transicion);
       this.iterator++;
       console.log("ok35");
-      this.q36();
+      this.q27();
     }else{
       this.errorMessage = "Falta el =";
     }
   }
-
-
-
-  q36(){
-
+  q27(){
+    if(this.cadena.charAt(this.iterator)==" "){
+      this.iterator++;
+      console.log(this.cadena.charAt(this.iterator))
+      if(this.cadena.charAt(this.iterator)=="-"){
+        this.transicion = ["q27",this.cadena.charAt(this.iterator),"q28"];
+        this.transiciones.push(this.transicion);
+        this.iterator++;
+        console.log("ok27");
+        this.q28();
+      }else{
+        this.transicion = ["q27","Sin entrada","q17"];
+        this.transiciones.push(this.transicion);
+        console.log(this.iterator)
+        this.q17();
+      }
+    }else{
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe ser un vacio para continuar";
+    }
   }
 
-  q37(){
+  q28(){
+    if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+      this.transicion = ["q28",this.cadena.substr(this.iterator,1),"q29"];
+      this.transiciones.push(this.transicion);
+      console.log("ok23");
+      this.iterator++;
+      this.q29();
+    }else{
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Debe ser un numero para continuar";
+    
+    }
+  }
 
+  q29(){
+    if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+      this.transicion = ["q29",this.cadena.substr(this.iterator,1),"q29"];
+      this.transiciones.push(this.transicion);
+      console.log("ok29");
+      this.iterator++;
+      this.q29();
+    }else{
+      if(this.cadena.charAt(this.iterator)==" "){
+        this.iterator++;
+        if(this.cadena.charAt(this.iterator) == ";"){
+          this.transicion = ["q29",this.cadena.charAt(this.iterator),"q30"];
+          this.transiciones.push(this.transicion);
+          console.log("ok29-2");
+          this.iterator++;
+          this.q30();
+        }else{
+          this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser ; para continuar";
+        }
+      }else{
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser un espacio o un numero para continuar";
+      }
+    }
+  }
+
+  q30(){
+    this.transicion = ["q30","Sin entrada","q17"];
+    this.transiciones.push(this.transicion);
+    this.iterator++;
+    console.log(this.iterator)
+    this.q17();
   }
 
 }
