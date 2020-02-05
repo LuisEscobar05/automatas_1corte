@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EntradaComponent } from './components/entrada/entrada.component';
-import { SalidaComponent } from './components/salida/salida.component';
+import { InputComponent } from './components/input/input.component';
+import { OutputComponent } from './components/output/output.component';
 
 
 
 const routes: Routes = [
   {
     path:'',
-    component:EntradaComponent
+    component:InputComponent
   },
   {
     path:'salida',
-    component:SalidaComponent
+    component:OutputComponent
 
   }
 ];

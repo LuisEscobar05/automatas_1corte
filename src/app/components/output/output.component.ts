@@ -3,11 +3,12 @@ import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-salida',
-  templateUrl: './salida.component.html',
-  styleUrls: ['./salida.component.css']
+  selector: 'app-output',
+  templateUrl: './output.component.html',
+  styleUrls: ['./output.component.css']
 })
-export class SalidaComponent implements OnInit {
+export class OutputComponent implements OnInit {
+
 
   data = this.dataService.getData()[0];
   message = this.dataService.getData()[1];
@@ -25,6 +26,4 @@ export class SalidaComponent implements OnInit {
   regresar(){
     this.router.navigateByUrl('/');
   }
-
-
 }

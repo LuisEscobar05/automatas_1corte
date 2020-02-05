@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
-  selector: 'app-entrada',
-  templateUrl: './entrada.component.html',
-  styleUrls: ['./entrada.component.css']
+  selector: 'app-input',
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.css']
 })
-export class EntradaComponent implements OnInit {
+export class InputComponent implements OnInit {
+
   cadena;
   iterator=0;
   join;
@@ -84,16 +85,23 @@ export class EntradaComponent implements OnInit {
   }
 
   q2(){
+    // var ca = this.cadena.charAt(this.iterator);
+    // var aux = this.iterator;
+    // console.log(this.cadena.charAt(this.iterator))
+    // while(this.iterator<8){
+    //   this.iterator++;
+    //   console.log("testt"+this.iterator)
+    //   ca = this.cadena.charAt(this.iterator)
+    // }
+
     var ca = this.cadena.charAt(this.iterator);
     var aux = this.iterator;
-    console.log(this.cadena.charAt(this.iterator))
     while(this.iterator<8){
       this.iterator++;
-      console.log("testt"+this.iterator)
       ca = this.cadena.charAt(this.iterator)
     }
 
-    if(this.cadena.substr(aux, this.iterator).match(/int/)){
+    if(this.cadena.substr(aux, this.iterator-aux).match(/int/)){
       this.transicion = ["q2",this.cadena.substr(aux,this.iterator-aux),"q3"];
       this.transiciones.push(this.transicion);
       this.iterator--;
@@ -118,7 +126,7 @@ export class EntradaComponent implements OnInit {
         }
       }else{
         this.lastState = "q2";
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio o la palabra reservada 'int' para continuar";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(aux)+ "   Falta un espacio o la palabra reservada 'int' para continuar";
       }
 
     }
@@ -466,7 +474,7 @@ export class EntradaComponent implements OnInit {
   q23(){
     console.log(this.iterator)
     if(this.cadena.substr(this.iterator,1).match(/[a-zA-Z]/)){
-      this.transicion = ["q23",this.cadena.substr(this.iterator,1),"q24"];
+      this.transicion = ["q23",this.cadena.substr(this.iterator,1),"q25"];
       this.transiciones.push(this.transicion);
       console.log("ok23");
       this.iterator++;

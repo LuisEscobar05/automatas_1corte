@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EntradaComponent } from './components/entrada/entrada.component';
-import { SalidaComponent } from './components/salida/salida.component';
+import { InputComponent } from './components/input/input.component';
+import { OutputComponent } from './components/output/output.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EntradaComponent,
-    SalidaComponent
+    InputComponent,
+    OutputComponent
   ],
   imports: [
     BrowserModule,

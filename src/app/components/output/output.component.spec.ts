@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SalidaComponent } from './salida.component';
+import { OutputComponent } from './output.component';
 
-describe('SalidaComponent', () => {
-  let component: SalidaComponent;
-  let fixture: ComponentFixture<SalidaComponent>;
+describe('OutputComponent', () => {
+  let component: OutputComponent;
+  let fixture: ComponentFixture<OutputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SalidaComponent ]
+      declarations: [ OutputComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SalidaComponent);
+    fixture = TestBed.createComponent(OutputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

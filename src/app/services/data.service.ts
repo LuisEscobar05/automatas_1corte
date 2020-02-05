@@ -17,7 +17,6 @@ export class DataService {
     this.lastState = lastState;
   }
 
-
   getData(){
     let temp = [this.data, this.message, this.lastState];
     this.clearData();
