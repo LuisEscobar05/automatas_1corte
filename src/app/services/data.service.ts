@@ -8,13 +8,18 @@ export class DataService {
 
   constructor(private router:Router) { }
   private data;
-  private mesage;
-  setData(data,mensaje){
+  private message;
+  private lastState;
+
+  setData(data,messaje,lastState){
     this.data= data;
-    this.mesage=mensaje;
+    this.message=messaje;
+    this.lastState = lastState;
   }
+
+
   getData(){
-    let temp = [this.data, this.mesage];
+    let temp = [this.data, this.message, this.lastState];
     this.clearData();
     return temp;
   }

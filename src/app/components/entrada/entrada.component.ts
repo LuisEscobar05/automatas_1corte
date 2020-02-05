@@ -13,8 +13,9 @@ export class EntradaComponent implements OnInit {
   join;
   transicion;
   transiciones = [];
-  // error = false;
+  lastState;
   errorMessage;
+  otherMessage;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
@@ -22,14 +23,21 @@ export class EntradaComponent implements OnInit {
 
   evaluar(){
     this.cadena=this.cadena;
-    console.log(this.cadena);
-    this.q0();
-    console.log(this.errorMessage);
-    console.log(this.transiciones);
-    this.dataService.setData(this.transiciones, this.errorMessage);
-    this.router.navigateByUrl('/salida');
-    this.iterator=0;
-    this.transiciones = [];
+    if(this.cadena == undefined){
+      this.otherMessage = "No puso ningun dato";
+      this.dataService.setData(this.transiciones, this.otherMessage, this.lastState);
+      this.router.navigateByUrl('/salida');
+      this.iterator=0;
+      this.transiciones = [];
+    }else{
+      this.q0();
+      console.log(this.transiciones);
+      this.dataService.setData(this.transiciones, this.errorMessage, this.lastState);
+      this.router.navigateByUrl('/salida');
+      this.iterator=0;
+      this.transiciones = [];
+    }
+
   }
   q0(){
     var c = this.cadena.charAt(this.iterator);
@@ -51,6 +59,7 @@ export class EntradaComponent implements OnInit {
       console.log(this.transiciones);
     }else{
       // this.error = true;
+      this.lastState = "q0";
       this.errorMessage = "Bucle no valido debe ser for"
     }
   }
@@ -65,10 +74,12 @@ export class EntradaComponent implements OnInit {
         console.log("ok1");
         this.q2();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.charAt(this.iterator)+ " Falta un ( para continuar";
+        this.lastState = "q1";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.charAt(this.iterator)+ "   Falta un ( para continuar";
       }
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+      this.lastState = "q1";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
     }
   }
 
@@ -102,10 +113,12 @@ export class EntradaComponent implements OnInit {
           console.log('ok2-2');
           this.q23();
         }else{
+          this.lastState = "q2";
           this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Debe ser ; para continuar";
         }
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio o la palabra reservada 'int' para continuar";
+        this.lastState = "q2";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio o la palabra reservada 'int' para continuar";
       }
 
     }
@@ -122,10 +135,12 @@ export class EntradaComponent implements OnInit {
         console.log("ok3");
         this.q4();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta i para continuar";
+        this.lastState = "q3";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta i para continuar";
       }
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+      this.lastState = "q3";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
     }
   }
 
@@ -138,10 +153,12 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q5();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un = para continuar";
+        this.lastState = "q4";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un = para continuar";
       }
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+      this.lastState = "q4";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
     }
   }
 
@@ -154,10 +171,12 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q6();
       }else{  
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un numero para continuar";
+        this.lastState = "q5";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un numero para continuar";
       }
    }else{
-    this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+    this.lastState = "q5";
+    this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
    }
   }
 
@@ -176,7 +195,8 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q7();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un ; para continuar";
+        this.lastState = "q6";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ; para continuar";
       }
       
     }
@@ -192,10 +212,12 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q8();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta i para continuar";
+        this.lastState = "q7";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta i para continuar";
       }
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+      this.lastState = "q7";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
     }
   }
 
@@ -214,7 +236,8 @@ export class EntradaComponent implements OnInit {
         console.log("ok8");
         this.q10();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta el signo > para continuar";
+        this.lastState = "q8";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta el signo > para continuar";
       }
     } 
   }
@@ -229,10 +252,12 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q12();
       }else{  
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un numero para continuar";
+        this.lastState = "q9";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un numero para continuar";
       }
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+      this.lastState = "q9";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
     }
   }
 
@@ -243,7 +268,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok10");
       this.q11();
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un = para continuar";
+      this.lastState = "q10";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un = para continuar";
     }
   }
 
@@ -268,7 +294,8 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q13();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un ; para continuar";
+        this.lastState = "q12";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ; para continuar";
       }
       
     }
@@ -284,10 +311,12 @@ export class EntradaComponent implements OnInit {
         console.log("ok14");
         this.q14();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta i para continuar";
+        this.lastState = "q13";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta i para continuar";
       }
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un espacio para continuar";
+      this.lastState = "q13";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio para continuar";
     }
 
   }
@@ -307,7 +336,8 @@ export class EntradaComponent implements OnInit {
         console.log("ok14-2");
         this.q16();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un signo + o un signo - para continuar";
+        this.lastState = "q14";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un signo + o un signo - para continuar";
       }
       
     }
@@ -321,7 +351,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok15");
       this.q17();
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "Falta un signo + para continuar";
+      this.lastState = "q15";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un signo + para continuar";
     }
   }
 
@@ -334,7 +365,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok23");
       this.q17();
     }else{
-      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un signo - para continuar";
+      this.lastState = "q16";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un signo - para continuar";
     }
   }
 
@@ -347,7 +379,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok17");
       this.q18();
     }else{
-      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta un ) para continuar";
+      this.lastState = "q17";
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta un ) para continuar";
     }
   }
 
@@ -359,20 +392,19 @@ export class EntradaComponent implements OnInit {
       console.log("ok18");
       this.q19();
     }else{
-      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta un { para continuar";
+      this.lastState = "q18";
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta un { para continuar";
     }
   }
 
   q19(){
     var ca = this.cadena.charAt(this.iterator);
     var aux = this.iterator;
-    console.log("cadena"+aux)
     while(ca!==';'){
       this.iterator++;
-      console.log("cadena"+this.iterator)
       ca = this.cadena.charAt(this.iterator)
     }
-    console.log("cadena"+this.cadena.substr(aux,this.iterator-aux));
+    // console.log("cadena"+this.cadena.substr(aux,this.iterator-aux));
     if(this.cadena.substr(aux,this.iterator-aux).match(/instrucciones/)){
       this.transicion = ["q19",this.cadena.substr(aux,this.iterator-aux),"q20"];
       this.transiciones.push(this.transicion);
@@ -381,7 +413,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok19");
       this.q20();
     }else{
-      this.errorMessage = "Entrada no valida--->"+ this.cadena.substr(aux,this.iterator-aux)+" Falta la palabra instrucciones para continuar";
+      this.lastState = "q19";
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.substr(aux,this.iterator-aux)+"   Falta la palabra instrucciones para continuar";
     }
   }
 
@@ -393,7 +426,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok20");
       this.q21();
     }else{
-      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta un ; para continuar";
+      this.lastState = "q20";
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta un ; para continuar";
     }
   }
 
@@ -407,7 +441,8 @@ export class EntradaComponent implements OnInit {
         console.log("ok21");
         this.q22();
       }else{
-        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta un } para continuar";
+        this.lastState = "q21";
+        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta un } para continuar";
       }
     }else{
       if(this.cadena.charAt(this.iterator)=="}"){
@@ -417,7 +452,8 @@ export class EntradaComponent implements OnInit {
         console.log("ok21");
         this.q22();
       }else{
-        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta } para continuar";
+        this.lastState = "q21";
+        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta } para continuar";
       }
     }
   }
@@ -443,7 +479,8 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q24();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un ; o una letra para continuar";
+        this.lastState = "q23";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ; o una letra para continuar";
       }
 
     }
@@ -471,7 +508,8 @@ export class EntradaComponent implements OnInit {
         this.iterator++;
         this.q26();
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un ! o una o mas letras para continuar";
+        this.lastState = "q25";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ! o una o mas letras para continuar";
       }
     }
   }
@@ -484,7 +522,8 @@ export class EntradaComponent implements OnInit {
       console.log("ok35");
       this.q27();
     }else{
-      this.errorMessage = "Falta el =";
+      this.lastState = "q26";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un = para continuar";
     }
   }
   q27(){
@@ -504,7 +543,8 @@ export class EntradaComponent implements OnInit {
         this.q17();
       }
     }else{
-      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta un vacio para continuar";
+      this.lastState = "q27";
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta un vacio para continuar";
     }
   }
 
@@ -516,7 +556,8 @@ export class EntradaComponent implements OnInit {
       this.iterator++;
       this.q29();
     }else{
-      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+" Falta un numero para continuar";
+      this.lastState = "q28";
+      this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+"   Falta un numero para continuar";
     
     }
   }
@@ -538,10 +579,12 @@ export class EntradaComponent implements OnInit {
           this.iterator++;
           this.q30();
         }else{
-          this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un ; para continuar";
+          this.lastState = "q29";
+          this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ; para continuar";
         }
       }else{
-        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ " Falta un espacio o un numero para continuar";
+        this.lastState = "q29";
+        this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un espacio o un numero para continuar";
       }
     }
   }

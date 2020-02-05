@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <br>
     <div class="row col-md-12" *ngFor="let item of data" id="col-div-12">
       <div class="card col col-md-4 estados">
@@ -12,8 +12,43 @@
       </div>
     </div>
     <br>
-    <p>{{mesage}}</p>
+    <p>{{lastState}}</p>
+    <p>{{message}}</p>
     <button (click)="regresar()" class="btn btn-primary">Regresar</button>
+</div> -->
+
+
+<div class="container">
+  <div class="table-responsive-sm">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th class="bg-success e" scope="col">Estado</th>
+          <th class="bg-warning e2" scope="col">Entrada</th>
+          <th class="bg-success e3" scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-primary"*ngFor="let item of data">
+          <td class="est">{{item[0]}}</td>
+          <td class="ent">{{item[1]}}</td>
+          <td class="est2">{{item[2]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="container">
+    <div class="row justify-content-center" >
+        <div class="mydiv" *ngIf="lastState!=null">
+          <label class="lastState">{{lastState}}</label>
+        </div>
+    </div>
+  </div><br>
+
+  <p style="color: red; font-size: 30px;">{{message}}</p>
+  <br>
+
+  <button (click)="regresar()" class="btn btn-outline-danger btn-lg">Regresar</button>
 </div>
-
-

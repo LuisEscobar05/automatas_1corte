@@ -1,8 +1,12 @@
 
-<div class="container-fluid">
-    <div class="form-group">
-        <label for="exampleFormControlTextarea1">Escribe tu for</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1"  [(ngModel)]="cadena" name="cadena" rows="3"></textarea><br>
-        <button (click)="evaluar()" class="btn btn-primary" type="submit">Evaluar</button>
-    </div>   
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="form-group">
+            <label class="txt">Escribe tu for</label>
+            <div class="input-group">
+                <textarea class="form-control form-control-lg " id="exampleFormControlTextarea1"  [(ngModel)]="cadena" name="cadena" rows="5" cols="35"></textarea><br>
+            </div><br>
+            <button (click)="evaluar()" class="btn btn-outline-primary btn-lg" type="submit">Evaluar</button>
+        </div>  
+    </div>
 </div>

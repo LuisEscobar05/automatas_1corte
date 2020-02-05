@@ -10,3 +10,52 @@
 .estados2{
     background-color: blue;
 }
+
+.mydiv{
+    text-align: center;
+    /* margin-top: 30px; */
+    /* margin-left: 50%; */
+    color: white;
+    background: red; border-radius: 50%; height: 100px; width: 100px;
+}
+
+.lastState{
+    font-size: 30px;
+    margin-top: 23%;
+}
+
+.mydiv2{
+    font-size: 10px;
+    background-color:yellow;
+}
+
+.est{
+    text-align: center;
+    color: white;
+    border-color: green;
+}
+.ent{
+    text-align: center;
+    color: white;
+    border-color: yellow;
+}
+.est2{
+    text-align: center;
+    color: white; 
+    border-color: green; 
+}
+
+.e{
+    text-align: center;
+    color: white; 
+}
+
+.e2{
+    text-align: center;
+    color: white; 
+}
+
+.e3{
+    text-align: center;
+    color: white; 
+}

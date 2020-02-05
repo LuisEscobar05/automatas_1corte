@@ -10,10 +10,14 @@ import { Router } from '@angular/router';
 export class SalidaComponent implements OnInit {
 
   data = this.dataService.getData()[0];
-  mesage = this.dataService.getData()[1];
+  message = this.dataService.getData()[1];
+  lastState = this.dataService.getData()[2];
+
+
   constructor(private dataService:DataService, private router:Router,) { 
     console.log(this.data);
-    console.log(this.mesage);
+    console.log(this.message);
+    console.log(this.lastState);
   }
 
   ngOnInit() {
