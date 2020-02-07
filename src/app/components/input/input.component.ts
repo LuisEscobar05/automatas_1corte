@@ -274,6 +274,7 @@ export class InputComponent implements OnInit {
       this.transicion = ["q10",this.cadena.charAt(this.iterator),"q11"];
       this.transiciones.push(this.transicion);
       console.log("ok10");
+      this.iterator++;
       this.q11();
     }else{
       this.lastState = "q10";
@@ -282,10 +283,16 @@ export class InputComponent implements OnInit {
   }
 
   q11(){
-    this.transicion = ["q11","no evalua","12"];
-    this.transiciones.push(this.transicion);
-    this.iterator++;
-    this.q12();
+    if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
+      this.transicion = ["q11",this.cadena.substr(this.iterator,1),"q12"];
+      this.transiciones.push(this.transicion);
+      console.log("ok11");
+      this.iterator++;
+      this.q12();
+    }else{  
+      this.lastState = "q11";
+      this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un numero para continuar";
+    }
   }
   q12(){
     if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
@@ -408,11 +415,12 @@ export class InputComponent implements OnInit {
   q19(){
     var ca = this.cadena.charAt(this.iterator);
     var aux = this.iterator;
+    console.log(this.iterator);
     while(ca!==';'){
       this.iterator++;
       ca = this.cadena.charAt(this.iterator)
     }
-    // console.log("cadena"+this.cadena.substr(aux,this.iterator-aux));
+
     if(this.cadena.substr(aux,this.iterator-aux).match(/instrucciones/)){
       this.transicion = ["q19",this.cadena.substr(aux,this.iterator-aux),"q20"];
       this.transiciones.push(this.transicion);
@@ -481,11 +489,18 @@ export class InputComponent implements OnInit {
       this.q25();
     }else{
       if(this.cadena.charAt(this.iterator) == ";"){
-        this.transicion = ["q23",this.cadena.charAt(this.iterator),"q24"];
+        this.transicion = ["q23",this.cadena.charAt(this.iterator),"q17"];
         this.transiciones.push(this.transicion);
         console.log("ok23-2");
         this.iterator++;
-        this.q24();
+        if (this.cadena.charAt(this.iterator)==" "){
+          this.iterator++;
+          this.q17();
+        }else{
+          this.lastState = "q23";
+          this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta espacio para continuar";   
+        }
+
       }else{
         this.lastState = "q23";
         this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ; o una letra para continuar";
@@ -494,12 +509,12 @@ export class InputComponent implements OnInit {
     }
   }
 
-  q24(){
-    this.transicion = ["q24","Sin entrada","q27"];
-    this.transiciones.push(this.transicion);
-    console.log(this.iterator);
-    this.q27();
-  }
+  // q24(){
+  //   this.transicion = ["q24","Sin entrada","q27"];
+  //   this.transiciones.push(this.transicion);
+  //   console.log(this.iterator);
+  //   this.q27();
+  // }
 
   q25(){
     if(this.cadena.substr(this.iterator,1).match(/[a-z]/)){
@@ -545,10 +560,8 @@ export class InputComponent implements OnInit {
         console.log("ok27");
         this.q28();
       }else{
-        this.transicion = ["q27","Sin entrada","q17"];
-        this.transiciones.push(this.transicion);
-        console.log(this.iterator)
-        this.q17();
+        this.lastState = "q27";
+        this.errorMessage = "Entrada no valida--->"+ this.cadena.charAt(this.iterator)+ "  Falta un signo - para continuar";
       }
     }else{
       this.lastState = "q27";
@@ -581,11 +594,17 @@ export class InputComponent implements OnInit {
       if(this.cadena.charAt(this.iterator)==" "){
         this.iterator++;
         if(this.cadena.charAt(this.iterator) == ";"){
-          this.transicion = ["q29",this.cadena.charAt(this.iterator),"q30"];
+          this.transicion = ["q29",this.cadena.charAt(this.iterator),"q17"];
           this.transiciones.push(this.transicion);
           console.log("ok29-2");
           this.iterator++;
-          this.q30();
+          if (this.cadena.charAt(this.iterator)==" "){
+            this.iterator++;
+            this.q17();
+          }else{
+            this.lastState = "q29";
+            this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta espacio o un ; para continuar";   
+          }
         }else{
           this.lastState = "q29";
           this.errorMessage = "Entrada no valida---> "+ this.cadena.substr(this.iterator,1)+ "   Falta un ; para continuar";
@@ -597,12 +616,12 @@ export class InputComponent implements OnInit {
     }
   }
 
-  q30(){
-    this.transicion = ["q30","Sin entrada","q17"];
-    this.transiciones.push(this.transicion);
-    this.iterator++;
-    console.log(this.iterator)
-    this.q17();
-  }
+  // q30(){
+  //   this.transicion = ["q30","Sin entrada","q17"];
+  //   this.transiciones.push(this.transicion);
+  //   this.iterator++;
+  //   console.log(this.iterator)
+  //   this.q17();
+  // }
 
 }
