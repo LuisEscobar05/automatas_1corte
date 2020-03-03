@@ -103,7 +103,7 @@ export class InputComponent implements OnInit {
     }else{
       this.iterator= aux;
       if(this.cadena.charAt(this.iterator)==" "){
-        this.transicion = ["q2", "λ" ,"q23"];
+        this.transicion = ["q2", "λ" ,"q27"];
         this.transiciones.push(this.transicion);
         this.iterator++;
         this.q27();
@@ -362,7 +362,7 @@ export class InputComponent implements OnInit {
   q13(){
 
     if(this.cadena.substr(this.iterator,1).match(/[0-9]/)){
-      this.transicion = ["q9",this.cadena.substr(this.iterator,1),"q12"];
+      this.transicion = ["q13",this.cadena.substr(this.iterator,1),"q12"];
       this.transiciones.push(this.transicion);
       console.log("ok13");
       this.iterator++;
@@ -543,7 +543,7 @@ export class InputComponent implements OnInit {
     var ca = this.cadena.charAt(this.iterator);
     var aux = this.iterator;
     console.log(this.iterator);
-    while(ca!==';'){
+    while(ca!=';'){
       this.iterator++;
       ca = this.cadena.charAt(this.iterator)
     }
