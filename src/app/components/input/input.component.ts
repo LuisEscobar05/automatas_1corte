@@ -368,6 +368,7 @@ export class InputComponent implements OnInit {
         this.q18();
       } else {
         this.estado2 = "q21";
+        this.iterator--;
         if (this.sinComponente(this.cadena.charAt(this.iterator - 1))) {
           this.q21();
         }
